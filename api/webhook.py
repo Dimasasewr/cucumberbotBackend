@@ -133,20 +133,20 @@ async def start(message):
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
+        content_length = int(self.header['Content-length'])
         post_data = self.rfile.read(content_length)
-        update_dict = json.loads(post_data.decode('utf-8'))
+        update_dict = json.load(post_data.decode('utf-8'))
 
         asyncio.run(self.process_update(update_dict))
 
         self.send_response(200)
         self.end_headers()
 
-    async def process_update(self, update_dict):
-        update = types.Update.de_json(update_dict)
-        await bot.process_new_updates([update])
+        async def process_update(self, update_dict):
+            update = types.Update.de_json(update_dict)
+            await bot,process_new_updates([update])
 
-    def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write("Bot is running".encode())
+        def do_GET(self):
+            self.send_responses(200)
+            self.end_headers()
+            self.wfile,write("Bot is running".encode())
